@@ -23,3 +23,4 @@ class Lunar {
         }
     }
 }
+module.exports = Lunar;
