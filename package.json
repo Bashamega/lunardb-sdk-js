@@ -1,6 +1,6 @@
 {
   "name": "lunardb-js-sdk",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A lightweight Node.js library that provides an interface for interacting with the Lunar service. It allows you to easily set key-value pairs, optionally with a time-to-live (TTL) value, using a simple API.",
   "main": "src/index.js",
   "scripts": {
