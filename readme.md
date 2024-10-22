@@ -59,6 +59,19 @@ Stores a key-value pair in the Lunar service.
 lunar.set('exampleKey', 'exampleValue', 60);
 ```
 
+#### `get(key)`
+
+Retrieves the value associated with a given key from the Lunar service.
+
+- **key** (string): The key for which the value needs to be retrieved.
+
+Returns the value associated with the key, or `null` if the key does not exist or has expired.
+
+```javascript
+const value = lunar.get('exampleKey');
+console.log(value); // Outputs the value or null if the key doesn't exist.
+```
+
 ## Error Handling
 
 The `set` method will catch any errors that occur during the execution of the command and return the error message. If the operation is successful, it returns the standard output from the command.
