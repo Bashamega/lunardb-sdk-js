@@ -38,5 +38,21 @@ class Lunar {
             return error
         }
     }
+    del(key){
+        try {
+            const command = `
+                lunar
+                del ${key}
+            `
+            exec(command, (error, stdout, stderr) => {
+                if (error) {
+                    return `exec error: ${error}`;
+                }
+                return stdout
+            });
+        } catch (error) {
+            return error
+        }
+    }
 }
 module.exports = Lunar;
