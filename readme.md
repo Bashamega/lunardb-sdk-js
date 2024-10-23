@@ -68,13 +68,124 @@ Retrieves the value associated with a given key from the Lunar service.
 Returns the value associated with the key, or `null` if the key does not exist or has expired.
 
 ```javascript
-const value = lunar.get('exampleKey');
-console.log(value); // Outputs the value or null if the key doesn't exist.
+lunar.get('exampleKey').then(value => {
+  console.log(value); // Outputs the value or null if the key doesn't exist.
+});
 ```
 
-## Error Handling
+#### `del(key)`
 
-The `set` method will catch any errors that occur during the execution of the command and return the error message. If the operation is successful, it returns the standard output from the command.
+Deletes a key-value pair from the Lunar service.
+
+- **key** (string): The key to be deleted.
+
+```javascript
+lunar.del('exampleKey').then(response => {
+  console.log(response); // Outputs success message or error if the key does not exist.
+});
+```
+
+#### `mset(...pairs)`
+
+Stores multiple key-value pairs in the Lunar service.
+
+- **pairs**: A list of keys and values, alternating between them.
+
+```javascript
+lunar.mset('key1', 'value1', 'key2', 'value2').then(response => {
+  console.log(response); // Outputs success message.
+});
+```
+
+#### `mget(...keys)`
+
+Retrieves multiple values associated with the given keys from the Lunar service.
+
+- **keys**: A list of keys to retrieve.
+
+```javascript
+lunar.mget('key1', 'key2').then(values => {
+  console.log(values); // Outputs the values for the keys or null if they do not exist.
+});
+```
+
+#### `keys()`
+
+Lists all keys stored in the Lunar service.
+
+```javascript
+lunar.keys().then(keys => {
+  console.log(keys); // Outputs a list of all keys.
+});
+```
+
+#### `clear()`
+
+Clears all key-value pairs from the Lunar service.
+
+```javascript
+lunar.clear().then(response => {
+  console.log(response); // Outputs success message.
+});
+```
+
+#### `size()`
+
+Gets the number of key-value pairs stored in the Lunar service.
+
+```javascript
+lunar.size().then(count => {
+  console.log(`Number of keys: ${count}`); // Outputs the number of keys.
+});
+```
+
+#### `cleanup()`
+
+Removes expired entries from the Lunar service.
+
+```javascript
+lunar.cleanup().then(response => {
+  console.log(response); // Outputs success message or number of expired entries removed.
+});
+```
+
+#### `save(filename)`
+
+Saves the current state of the Lunar service to a file.
+
+- **filename** (string): The name of the file where the state will be saved.
+
+```javascript
+lunar.save('backup.json').then(response => {
+  console.log(response); // Outputs success message.
+});
+```
+
+#### `load(filename)`
+
+Loads the state of the Lunar service from a file.
+
+- **filename** (string): The name of the file from which the state will be loaded.
+
+```javascript
+lunar.load('backup.json').then(response => {
+  console.log(response); // Outputs success message.
+});
+```
+
+### Error Handling
+
+All methods return a Promise. If an error occurs during the execution of a command, the Promise will be rejected with an error message.
+
+```javascript
+lunar.set('exampleKey', 'exampleValue', 60)
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+```
 
 ## License
 
