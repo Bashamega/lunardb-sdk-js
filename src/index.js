@@ -1,58 +1,125 @@
 const { exec } = require('child_process');
+const util = require('util');
+
 class Lunar {
-    constructor(){
+    constructor() {
         this.baseUrl = 'http://localhost:8000';
+        this.execAsync = util.promisify(exec); // Promisify exec for cleaner async/await handling
     }
-    connection(connectionURL){
+
+    connection(connectionURL) {
         this.baseUrl = connectionURL;
     }
-    set(key, value, ttl){
+
+    async set(key, value, ttl) {
+        const command = `lunar set ${key} ${value} ${ttl ? ttl : ''}`;
         try {
-            const command = `
-                lunar
-                set ${key} ${value} ${ttl ? ttl : ''}
-            `
-            exec(command, (error, stdout, stderr) => {
-                if (error) {
-                    return `exec error: ${error}`;
-                }
-                return stdout
-            });
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
         } catch (error) {
-            return error
+            return `exec error: ${error.message}`;
         }
     }
-    get(key){
+
+    async get(key) {
+        const command = `lunar get ${key}`;
         try {
-            const command = `
-                lunar
-                get ${key}
-            `
-            exec(command, (error, stdout, stderr) => {
-                if (error) {
-                    return `exec error: ${error}`;
-                }
-                return stdout
-            });
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
         } catch (error) {
-            return error
+            return `exec error: ${error.message}`;
         }
     }
-    del(key){
+
+    async del(key) {
+        const command = `lunar del ${key}`;
         try {
-            const command = `
-                lunar
-                del ${key}
-            `
-            exec(command, (error, stdout, stderr) => {
-                if (error) {
-                    return `exec error: ${error}`;
-                }
-                return stdout
-            });
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
         } catch (error) {
-            return error
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async mset(...pairs) {
+        const command = `lunar mset ${pairs.join(' ')}`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async mget(...keys) {
+        const command = `lunar mget ${keys.join(' ')}`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async keys() {
+        const command = `lunar keys`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async clear() {
+        const command = `lunar clear`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async size() {
+        const command = `lunar size`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async cleanup() {
+        const command = `lunar cleanup`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async save(filename) {
+        const command = `lunar save ${filename}`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
+        }
+    }
+
+    async load(filename) {
+        const command = `lunar load ${filename}`;
+        try {
+            const { stdout } = await this.execAsync(command.trim());
+            return stdout;
+        } catch (error) {
+            return `exec error: ${error.message}`;
         }
     }
 }
+
 module.exports = Lunar;
